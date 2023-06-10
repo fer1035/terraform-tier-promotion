@@ -1,0 +1,60 @@
+name: terratest
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      TERRAFORM_VERSION:
+        required: true
+        type: string
+      TIMEOUT:
+        required: true
+        type: string
+      FUNCTION:
+        required: true
+        type: string
+      AWS_DEFAULT_REGION:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+        type: string
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+        type: string
+      TF_API_TOKEN:
+        rewuired: true
+        type: string
+
+jobs:
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    defaults:
+      run:
+        working-directory: ./testing
+    steps:
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ inputs.TERRAFORM_VERSION }}
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Install Go
+        uses: actions/checkout@v3
+        uses: actions/setup-go@v4
+        with:
+          go-version: 'stable'
+        run: go version
+      - name: Run Tests
+        run: |
+          rm -rf go.*
+          go mod init example.com/test
+          go mod tidy
+          AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+          AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+          AWS_DEFAULT_REGION=${{ inputs.AWS_DEFAULT_REGION }} \
+          go test -v -timeout ${{ inputs.TIMEOUT }} -run ${{ inputs.FUNCTION }}

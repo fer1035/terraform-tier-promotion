@@ -1,0 +1,42 @@
+name: terraform
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      TERRAFORM_VERSION:
+        required: true
+        type: string
+      TIER_PATH:
+        required: true
+        type: string
+    secrets:
+      TF_API_TOKEN:
+        rewuired: true
+        type: string
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.TIER_PATH }}
+    steps:
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ inputs.TERRAFORM_VERSION }}
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply

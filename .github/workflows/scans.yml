@@ -1,0 +1,89 @@
+name: scans
+
+on:
+  pull_request:
+
+env:
+  ENVIRONMENT: pull-request
+  TERRAFORM_VERSION: '1.4.6'
+  DEV_PATH: ./tiers/dev
+  TEST_PATH: ./tiers/test
+  PROD_PATH: ./tiers/prod
+  TERRAFORM_PATH: ./terraform
+
+jobs:
+
+  dev:
+    name: dev
+    uses: ./.github/workflows/templates/tier.yml
+    with:
+      TIER_PATH: $DEV_PATH
+      TERRAFORM_PATH: $TERRAFORM_PATH
+  tfsec-dev:
+    name: tfsec-dev
+    needs: dev
+    uses: ./.github/workflows/templates/tfsec.yml
+    with:
+      ENVIRONMENT: $ENVIRONMENT
+      TIER_PATH: $DEV_PATH
+  terraform-dev:
+    name: terraform-dev
+    needs: dev
+    uses: ./.github/workflows/templates/terraform_validate.yml
+    with:
+      ENVIRONMENT: $ENVIRONMENT
+      TERRAFORM_VERSION: $TERRAFORM_VERSION
+      TIER_PATH: $DEV_PATH
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
+
+  test:
+    name: test
+    uses: ./.github/workflows/templates/tier.yml
+    with:
+      TIER_PATH: $TEST_PATH
+      TERRAFORM_PATH: $TERRAFORM_PATH
+  tfsec-test:
+    name: tfsec-test
+    needs: test
+    uses: ./.github/workflows/templates/tfsec.yml
+    with:
+      ENVIRONMENT: $ENVIRONMENT
+      TIER_PATH: $TEST_PATH
+  terraform-test:
+    name: terraform-test
+    needs: test
+    uses: ./.github/workflows/templates/terraform_validate.yml
+    with:
+      ENVIRONMENT: $ENVIRONMENT
+      TERRAFORM_VERSION: $TERRAFORM_VERSION
+      TIER_PATH: $TEST_PATH
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
+
+  prod:
+    name: prod
+    uses: ./.github/workflows/templates/tier.yml
+    with:
+      TIER_PATH: $PROD_PATH
+      TERRAFORM_PATH: $TERRAFORM_PATH
+  tfsec-prod:
+    name: tfsec-prod
+    needs: prod
+    uses: ./.github/workflows/templates/tfsec.yml
+    with:
+      ENVIRONMENT: $ENVIRONMENT
+      TIER_PATH: $PROD_PATH
+  terraform-prod:
+    name: terraform-prod
+    needs: prod
+    uses: ./.github/workflows/templates/terraform_validate.yml
+    with:
+      ENVIRONMENT: $ENVIRONMENT
+      TERRAFORM_VERSION: $TERRAFORM_VERSION
+      TIER_PATH: $PROD_PATH
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
