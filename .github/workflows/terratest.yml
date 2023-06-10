@@ -44,6 +44,7 @@ jobs:
         with:
           terraform_version: ${{ inputs.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          terraform_wrapper: false
 
       - name: Install Go
         uses: actions/setup-go@v4
