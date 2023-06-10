@@ -1,7 +1,5 @@
 name: tier
 
-steps:
-
 on:
   workflow_call:
     inputs:
