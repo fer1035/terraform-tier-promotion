@@ -5,47 +5,35 @@ on:
     branches:
       - main
 
-env:
-  TEST_ENVIRONMENT: test
-  PROD_ENVIRONMENT: prod
-  TERRAFORM_VERSION: '1.4.6'
-  TEST_PATH: tiers/test
-  PROD_PATH: tiers/prod
-  TERRAFORM_PATH: terraform
-  TIMEOUT: 10S
-  AWS_DEFAULT_REGION: ap-southeast-1
-  TEST_FUNCTION: TestAwsS3Test
-  PROD_FUNCTION: TestAwsS3Prod
-
 jobs:
 
   test:
     name: test
-    uses: ./.github/workflows/tier.yml
+    uses: .github/workflows/tier.yml
     with:
-      ENVIRONMENT: $TEST_ENVIRONMENT
-      TIER_PATH: $TEST_PATH
-      TERRAFORM_PATH: $TERRAFORM_PATH
+      ENVIRONMENT: test
+      TIER_PATH: tiers/test
+      TERRAFORM_PATH: terraform
   terraform-test:
     name: terraform-test
     needs: test
-    uses: ./.github/workflows/terraform_deploy.yml
+    uses: .github/workflows/terraform_deploy.yml
     with:
-      ENVIRONMENT: $TEST_ENVIRONMENT
-      TERRAFORM_VERSION: $TERRAFORM_VERSION
-      TIER_PATH: $TEST_PATH
+      ENVIRONMENT: test
+      TERRAFORM_VERSION: '1.4.6'
+      TIER_PATH: tiers/test
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   terratest-test:
     name: terratest-test
     needs: terraform-test
-    uses: ./.github/workflows/terratest.yml
+    uses: .github/workflows/terratest.yml
     with:
-      ENVIRONMENT: $TEST_ENVIRONMENT
-      TERRAFORM_VERSION: $TERRAFORM_VERSION
-      TIMEOUT: $TIMEOUT
-      FUNCTION: $TEST_FUNCTION
-      AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+      ENVIRONMENT: test
+      TERRAFORM_VERSION: '1.4.6'
+      TIMEOUT: 10s
+      FUNCTION: TestAwsS3Test
+      AWS_DEFAULT_REGION: ap-southeast-1
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -69,31 +57,31 @@ jobs:
   prod:
     name: prod
     needs: terratest-test
-    uses: ./.github/workflows/tier.yml
+    uses: .github/workflows/tier.yml
     with:
-      ENVIRONMENT: $PROD_ENVIRONMENT
-      TIER_PATH: $PROD_PATH
-      TERRAFORM_PATH: $TERRAFORM_PATH
+      ENVIRONMENT: prod
+      TIER_PATH: tiers/prod
+      TERRAFORM_PATH: terraform
   terraform-prod:
     name: terraform-prod
     needs: prod
-    uses: ./.github/workflows/terraform_deploy.yml
+    uses: .github/workflows/terraform_deploy.yml
     with:
-      ENVIRONMENT: $PROD_ENVIRONMENT
-      TERRAFORM_VERSION: $TERRAFORM_VERSION
-      TIER_PATH: $PROD_PATH
+      ENVIRONMENT: prod
+      TERRAFORM_VERSION: '1.4.6'
+      TIER_PATH: tiers/prod
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
   terratest-prod:
     name: terratest-prod
     needs: terraform-prod
-    uses: ./.github/workflows/terratest.yml
+    uses: .github/workflows/terratest.yml
     with:
-      ENVIRONMENT: $PROD_ENVIRONMENT
-      TERRAFORM_VERSION: $TERRAFORM_VERSION
-      TIMEOUT: $TIMEOUT
-      FUNCTION: $PROD_FUNCTION
-      AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+      ENVIRONMENT: prod
+      TERRAFORM_VERSION: '1.4.6'
+      TIMEOUT: 10s
+      FUNCTION: TestAwsS3Prod
+      AWS_DEFAULT_REGION: ap-southeast-1
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
