@@ -26,7 +26,7 @@ func TestAwsS3Test(t *testing.T) {
 	t.Parallel()
 
 	awsRegion := "ap-southeast-1"
-	bucketID := "my-testing-bucket-324354613568-test"
+	bucketID := "my-testing-bucket-1035-test"
 
 	aws.AssertS3BucketExists(t, awsRegion, bucketID)
 }
@@ -35,7 +35,7 @@ func TestAwsS3Prod(t *testing.T) {
 	t.Parallel()
 
 	awsRegion := "ap-southeast-1"
-	bucketID := "my-testing-bucket-324354613568-prod"
+	bucketID := "my-testing-bucket-1035-prod"
 
 	aws.AssertS3BucketExists(t, awsRegion, bucketID)
 }
