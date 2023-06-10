@@ -9,7 +9,7 @@ jobs:
 
   test:
     name: test
-    uses: .github/workflows/tier.yml
+    uses: ./.github/workflows/tier.yml
     with:
       ENVIRONMENT: test
       TIER_PATH: tiers/test
@@ -17,7 +17,7 @@ jobs:
   terraform-test:
     name: terraform-test
     needs: test
-    uses: .github/workflows/terraform_deploy.yml
+    uses: ./.github/workflows/terraform_deploy.yml
     with:
       ENVIRONMENT: test
       TERRAFORM_VERSION: '1.4.6'
@@ -27,7 +27,7 @@ jobs:
   terratest-test:
     name: terratest-test
     needs: terraform-test
-    uses: .github/workflows/terratest.yml
+    uses: ./.github/workflows/terratest.yml
     with:
       ENVIRONMENT: test
       TERRAFORM_VERSION: '1.4.6'
@@ -57,7 +57,7 @@ jobs:
   prod:
     name: prod
     needs: terratest-test
-    uses: .github/workflows/tier.yml
+    uses: ./.github/workflows/tier.yml
     with:
       ENVIRONMENT: prod
       TIER_PATH: tiers/prod
@@ -65,7 +65,7 @@ jobs:
   terraform-prod:
     name: terraform-prod
     needs: prod
-    uses: .github/workflows/terraform_deploy.yml
+    uses: ./.github/workflows/terraform_deploy.yml
     with:
       ENVIRONMENT: prod
       TERRAFORM_VERSION: '1.4.6'
@@ -75,7 +75,7 @@ jobs:
   terratest-prod:
     name: terratest-prod
     needs: terraform-prod
-    uses: .github/workflows/terratest.yml
+    uses: ./.github/workflows/terratest.yml
     with:
       ENVIRONMENT: prod
       TERRAFORM_VERSION: '1.4.6'

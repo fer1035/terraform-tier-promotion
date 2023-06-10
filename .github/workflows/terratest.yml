@@ -35,15 +35,21 @@ jobs:
       run:
         working-directory: testing
     steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ inputs.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
       - name: Install Go
         uses: actions/setup-go@v4
         with:
           go-version: 'stable'
+
       - name: Run Tests
         run: |
           rm -rf go.*

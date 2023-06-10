@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.ENVIRONMENT }}
     steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Populate Tiers
         run: |
           cp -rf ${{ inputs.TERRAFORM_PATH }}/* ${{ inputs.TIER_PATH }}/
