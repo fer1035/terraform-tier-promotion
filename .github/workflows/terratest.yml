@@ -24,7 +24,7 @@ on:
       AWS_SECRET_ACCESS_KEY:
         required: true
       TF_API_TOKEN:
-        rewuired: true
+        required: true
 
 jobs:
   go:
@@ -41,7 +41,6 @@ jobs:
           terraform_version: ${{ inputs.TERRAFORM_VERSION }}
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Install Go
-        uses: actions/checkout@v3
         uses: actions/setup-go@v4
         with:
           go-version: 'stable'
