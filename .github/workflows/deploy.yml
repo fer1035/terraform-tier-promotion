@@ -9,9 +9,9 @@ env:
   TEST_ENVIRONMENT: test
   PROD_ENVIRONMENT: prod
   TERRAFORM_VERSION: '1.4.6'
-  TEST_PATH: ./tiers/test
-  PROD_PATH: ./tiers/prod
-  TERRAFORM_PATH: ./terraform
+  TEST_PATH: tiers/test
+  PROD_PATH: tiers/prod
+  TERRAFORM_PATH: terraform
   TIMEOUT: 10S
   AWS_DEFAULT_REGION: ap-southeast-1
   TEST_FUNCTION: TestAwsS3Test

@@ -33,7 +33,7 @@ jobs:
     environment: ${{ inputs.ENVIRONMENT }}
     defaults:
       run:
-        working-directory: ./testing
+        working-directory: testing
     steps:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1

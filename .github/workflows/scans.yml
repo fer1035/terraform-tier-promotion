@@ -6,10 +6,10 @@ on:
 env:
   ENVIRONMENT: pull-request
   TERRAFORM_VERSION: '1.4.6'
-  DEV_PATH: ./tiers/dev
-  TEST_PATH: ./tiers/test
-  PROD_PATH: ./tiers/prod
-  TERRAFORM_PATH: ./terraform
+  DEV_PATH: tiers/dev
+  TEST_PATH: tiers/test
+  PROD_PATH: tiers/prod
+  TERRAFORM_PATH: terraform
 
 jobs:
 

@@ -11,8 +11,8 @@ env:
   TIMEOUT: 10m
   FUNCTION: TestAwsS3Dev
   AWS_DEFAULT_REGION: ap-southeast-1
-  DEV_PATH: ./tiers/dev
-  TERRAFORM_PATH: ./terraform
+  DEV_PATH: tiers/dev
+  TERRAFORM_PATH: terraform
 
 jobs:
 
