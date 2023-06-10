@@ -1,0 +1,28 @@
+name: tier
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      TIER_PATH:
+        required: true
+        type: string
+      TERRAFORM_PATH:
+        required: true
+        type: string
+
+jobs:
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Populate Tiers
+        run: |
+          cp -rf ${{ inputs.TERRAFORM_PATH }}/* ${{ inputs.TIER_PATH }}/

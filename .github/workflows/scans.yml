@@ -1,0 +1,84 @@
+name: scans
+
+on:
+  pull_request:
+
+jobs:
+
+  dev:
+    name: dev
+    uses: ./.github/workflows/tier.yml
+    with:
+      ENVIRONMENT: pull-request
+      TIER_PATH: tiers/dev
+      TERRAFORM_PATH: terraform
+  tfsec-dev:
+    name: tfsec-dev
+    needs: dev
+    uses: ./.github/workflows/tfsec.yml
+    with:
+      ENVIRONMENT: pull-request
+      TIER_PATH: tiers/dev
+  terraform-dev:
+    name: terraform-dev
+    needs: dev
+    uses: ./.github/workflows/terraform_validate.yml
+    with:
+      ENVIRONMENT: pull-request
+      TERRAFORM_VERSION: '1.4.6'
+      TIER_PATH: tiers/dev
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
+
+  test:
+    name: test
+    uses: ./.github/workflows/tier.yml
+    with:
+      ENVIRONMENT: pull-request
+      TIER_PATH: tiers/test
+      TERRAFORM_PATH: terraform
+  tfsec-test:
+    name: tfsec-test
+    needs: test
+    uses: ./.github/workflows/tfsec.yml
+    with:
+      ENVIRONMENT: pull-request
+      TIER_PATH: tiers/test
+  terraform-test:
+    name: terraform-test
+    needs: test
+    uses: ./.github/workflows/terraform_validate.yml
+    with:
+      ENVIRONMENT: pull-request
+      TERRAFORM_VERSION: '1.4.6'
+      TIER_PATH: tiers/test
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
+
+  prod:
+    name: prod
+    uses: ./.github/workflows/tier.yml
+    with:
+      ENVIRONMENT: pull-request
+      TIER_PATH: tiers/prod
+      TERRAFORM_PATH: terraform
+  tfsec-prod:
+    name: tfsec-prod
+    needs: prod
+    uses: ./.github/workflows/tfsec.yml
+    with:
+      ENVIRONMENT: pull-request
+      TIER_PATH: tiers/prod
+  terraform-prod:
+    name: terraform-prod
+    needs: prod
+    uses: ./.github/workflows/terraform_validate.yml
+    with:
+      ENVIRONMENT: pull-request
+      TERRAFORM_VERSION: '1.4.6'
+      TIER_PATH: tiers/prod
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
