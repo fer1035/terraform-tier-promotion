@@ -13,7 +13,7 @@ resource "aws_s3_bucket" "test" {
   #checkov:skip=CKV_AWS_21:Test bucket does not need versioning.
   #checkov:skip=CKV_AWS_145:Test bucket does not need encryption.
   #checkov:skip=CKV_AWS_18:Test bucket does not need access logging.
-  bucket = "my-testing-bucket-324354613568-test"
+  bucket = "my-testing-bucket-1035-test"
 }
 
 output "test" {
