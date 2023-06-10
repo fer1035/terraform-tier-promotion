@@ -20,7 +20,8 @@ jobs:
     name: tier
     uses: ./.github/workflows/tier.yml
     with:
-      TIERPATH: $DEV_PATH
+      ENVIRONMENT: $ENVIRONMENT
+      TIER_PATH: $DEV_PATH
       TERRAFORM_PATH: $TERRAFORM_PATH
   
   terratest:
