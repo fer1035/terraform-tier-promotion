@@ -35,6 +35,7 @@ jobs:
     name: test
     uses: ./.github/workflows/tier.yml
     with:
+      ENVIRONMENT: pull-request
       TIER_PATH: tiers/test
       TERRAFORM_PATH: terraform
   tfsec-test:
@@ -60,6 +61,7 @@ jobs:
     name: prod
     uses: ./.github/workflows/tier.yml
     with:
+      ENVIRONMENT: pull-request
       TIER_PATH: tiers/prod
       TERRAFORM_PATH: terraform
   tfsec-prod:
