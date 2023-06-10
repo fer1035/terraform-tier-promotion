@@ -14,8 +14,7 @@ on:
         type: string
     secrets:
       TF_API_TOKEN:
-        rewuired: true
-        type: string
+        required: true
 
 jobs:
   terraform:

@@ -14,11 +14,9 @@ on:
         type: string
     secrets:
       TF_API_TOKEN:
-        rewuired: true
-        type: string
+        required: true
       TF_GITHUB_TOKEN:
-        rewuired: true
-        type: string
+        required: true
 
 jobs:
   terraform:
