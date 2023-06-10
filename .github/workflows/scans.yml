@@ -15,21 +15,21 @@ jobs:
 
   dev:
     name: dev
-    uses: ./.github/workflows/templates/tier.yml
+    uses: ./.github/workflows/tier.yml
     with:
       TIER_PATH: $DEV_PATH
       TERRAFORM_PATH: $TERRAFORM_PATH
   tfsec-dev:
     name: tfsec-dev
     needs: dev
-    uses: ./.github/workflows/templates/tfsec.yml
+    uses: ./.github/workflows/tfsec.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TIER_PATH: $DEV_PATH
   terraform-dev:
     name: terraform-dev
     needs: dev
-    uses: ./.github/workflows/templates/terraform_validate.yml
+    uses: ./.github/workflows/terraform_validate.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TERRAFORM_VERSION: $TERRAFORM_VERSION
@@ -40,21 +40,21 @@ jobs:
 
   test:
     name: test
-    uses: ./.github/workflows/templates/tier.yml
+    uses: ./.github/workflows/tier.yml
     with:
       TIER_PATH: $TEST_PATH
       TERRAFORM_PATH: $TERRAFORM_PATH
   tfsec-test:
     name: tfsec-test
     needs: test
-    uses: ./.github/workflows/templates/tfsec.yml
+    uses: ./.github/workflows/tfsec.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TIER_PATH: $TEST_PATH
   terraform-test:
     name: terraform-test
     needs: test
-    uses: ./.github/workflows/templates/terraform_validate.yml
+    uses: ./.github/workflows/terraform_validate.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TERRAFORM_VERSION: $TERRAFORM_VERSION
@@ -65,21 +65,21 @@ jobs:
 
   prod:
     name: prod
-    uses: ./.github/workflows/templates/tier.yml
+    uses: ./.github/workflows/tier.yml
     with:
       TIER_PATH: $PROD_PATH
       TERRAFORM_PATH: $TERRAFORM_PATH
   tfsec-prod:
     name: tfsec-prod
     needs: prod
-    uses: ./.github/workflows/templates/tfsec.yml
+    uses: ./.github/workflows/tfsec.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TIER_PATH: $PROD_PATH
   terraform-prod:
     name: terraform-prod
     needs: prod
-    uses: ./.github/workflows/templates/terraform_validate.yml
+    uses: ./.github/workflows/terraform_validate.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TERRAFORM_VERSION: $TERRAFORM_VERSION

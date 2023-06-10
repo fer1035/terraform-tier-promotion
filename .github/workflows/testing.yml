@@ -18,14 +18,14 @@ jobs:
 
   tier:
     name: tier
-    uses: ./.github/workflows/templates/tier.yml
+    uses: ./.github/workflows/tier.yml
     with:
       TIERPATH: $DEV_PATH
       TERRAFORM_PATH: $TERRAFORM_PATH
   
   terratest:
     name: terratest
-    uses: ./.github/workflows/templates/terratest.yml
+    uses: ./.github/workflows/terratest.yml
     with:
       ENVIRONMENT: $ENVIRONMENT
       TERRAFORM_VERSION: $TERRAFORM_VERSION
