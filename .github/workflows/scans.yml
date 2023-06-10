@@ -9,6 +9,7 @@ jobs:
     name: dev
     uses: ./.github/workflows/tier.yml
     with:
+      ENVIRONMENT: pull-request
       TIER_PATH: tiers/dev
       TERRAFORM_PATH: terraform
   tfsec-dev:
