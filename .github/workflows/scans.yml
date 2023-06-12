@@ -33,7 +33,6 @@ jobs:
       TIER_PATH: tiers/dev
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
 
   test:
     name: test
@@ -59,7 +58,6 @@ jobs:
       TIER_PATH: tiers/test
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
 
   prod:
     name: prod
@@ -85,4 +83,3 @@ jobs:
       TIER_PATH: tiers/prod
     secrets:
       TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
-      TF_GITHUB_TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
