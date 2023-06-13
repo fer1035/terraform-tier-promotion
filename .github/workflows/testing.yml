@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - 'feature/**'
-    paths-ignore:
-      - '**/README.md'
-      - '**/LICENSE'
-      - 'images/**'
+    # paths-ignore:
+    #   - '**/README.md'
+    #   - '**/LICENSE'
+    #   - 'images/**'
 
 jobs:
 
