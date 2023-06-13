@@ -2,10 +2,10 @@ name: scans
 
 on:
   pull_request:
-    paths-ignore:
-      - '**/README.md'
-      - '**/LICENSE'
-      - 'images/**'
+    # paths-ignore:
+    #   - '**/README.md'
+    #   - '**/LICENSE'
+    #   - 'images/**'
 
 jobs:
 
